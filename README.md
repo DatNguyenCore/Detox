@@ -1,0 +1,2 @@
+# Detox
+Detox application
