@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -11,90 +11,261 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:id="@+id/img_home_clock"
             android:layout_width="87dp"
             android:layout_height="114dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="78dp"
             android:src="@drawable/ic_clock"
-            android:id="@+id/img_home_clock"
-            />
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@+id/img_home_clock"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="70dp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_title_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Select time"
+            android:textColor="@color/black"
+            android:textFontWeight="600"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_home_clock" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/liner_home_clock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_home_clock"
             tools:ignore="MissingConstraints">
+
             <EditText
                 android:id="@+id/edit_text_home_mins"
                 android:layout_width="58dp"
                 android:layout_height="58dp"
                 android:background="@drawable/edit_text_border_radius"
-                android:textColor="@color/white"
                 android:gravity="center"
-                android:textStyle="bold"
-                android:textSize="20dp"
-                android:maxLength="2"
-                android:inputType="number"
-                android:nextFocusRight="@+id/edit_text_home_second"
                 android:hint="00"
+                android:inputType="number"
+                android:maxLength="2"
+                android:nextFocusRight="@+id/edit_text_home_second"
+                android:textColor="@color/white"
                 android:textColorHint="@color/gray"
-                />
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
                 android:text=":"
                 android:textColor="@color/black"
-                android:textSize="35dp"
-                android:layout_marginHorizontal="8dp"
-                />
+                android:textSize="35dp" />
+
             <EditText
                 android:id="@+id/edit_text_home_second"
                 android:layout_width="58dp"
                 android:layout_height="58dp"
                 android:background="@drawable/edit_text_border_radius"
-                android:textColor="@color/white"
                 android:gravity="center"
-                android:textStyle="bold"
-                android:textSize="20dp"
-                android:maxLength="2"
-                android:inputType="number"
                 android:hint="00"
+                android:inputType="number"
+                android:maxLength="2"
+                android:textColor="@color/white"
                 android:textColorHint="@color/gray"
-                />
+                android:textSize="20dp"
+                android:textStyle="bold" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nowhere to go back, focus on your work"
-            app:layout_constraintTop_toBottomOf="@+id/liner_home_clock"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="20dp"
-            android:textSize="16dp"
             android:id="@+id/text_home_dest"
-            />
-        <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/text_home_dest"
+            android:layout_marginTop="20dp"
+            android:text="Nowhere to go back, focus on your work"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:visibility="gone"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/liner_home_clock" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_home_stop_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Stop your freedom (9)"
-            app:backgroundTint="@color/black"
+            android:background="@drawable/primary_button_background"
+            android:elevation="0dp"
             android:paddingHorizontal="25dp"
             android:paddingVertical="12dp"
-            android:elevation="0dp"
-            android:background="@drawable/primary_button_background"/>
+            android:text="Stop your freedom (9)"
+            android:visibility="gone"
+            app:backgroundTint="@color/black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_home_dest" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="32dp"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/liner_home_clock">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_home_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/border_card_home"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/text_home_card_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="10 minutes"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="@+id/constraint_home_card"
+                    app:layout_constraintTop_toTopOf="@+id/constraint_home_card" />
+
+                <TextView
+                    android:layout_width="234dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="12dp"
+                    android:text="Do housework, go for a walk,
+                    let the dog go to the toilet"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/button_home_start_time"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="@+id/constraint_home_card"
+                    app:layout_constraintRight_toLeftOf="@+id/button_home_start_time"
+                    app:layout_constraintStart_toStartOf="@+id/text_home_card_title"
+                    app:layout_constraintTop_toBottomOf="@+id/text_home_card_title" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_home_start_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/primary_button_background"
+                    android:elevation="0dp"
+                    android:text="Start"
+                    app:backgroundTint="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_home_card_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/border_card_home"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/text_home_card_title_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="20 minutes"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="@+id/constraint_home_card_2"
+                    app:layout_constraintTop_toTopOf="@+id/constraint_home_card_2" />
+
+                <TextView
+                    android:layout_width="234dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="12dp"
+                    android:text="Reading books,  take a bath"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/button_home_start_time_2"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="@+id/constraint_home_card_2"
+                    app:layout_constraintRight_toLeftOf="@+id/button_home_start_time_2"
+                    app:layout_constraintStart_toStartOf="@+id/text_home_card_title_2"
+                    app:layout_constraintTop_toBottomOf="@+id/text_home_card_title_2" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_home_start_time_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/primary_button_background"
+                    android:elevation="0dp"
+                    android:text="Start"
+                    app:backgroundTint="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_home_card_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/border_card_home"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/text_home_card_title_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="1 hour"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="@+id/constraint_home_card_3"
+                    app:layout_constraintTop_toTopOf="@+id/constraint_home_card_3" />
+
+                <TextView
+                    android:layout_width="234dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="32dp"
+                    android:text="Working, jogging in the park, cooking at home"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/button_home_start_time_3"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="@+id/constraint_home_card_3"
+                    app:layout_constraintRight_toLeftOf="@+id/button_home_start_time_3"
+                    app:layout_constraintStart_toStartOf="@+id/text_home_card_title_3"
+                    app:layout_constraintTop_toBottomOf="@+id/text_home_card_title_3" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_home_start_time_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/primary_button_background"
+                    android:elevation="0dp"
+                    android:text="Start"
+                    app:backgroundTint="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
