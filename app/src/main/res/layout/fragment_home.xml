@@ -145,7 +145,7 @@
                     app:layout_constraintTop_toTopOf="@+id/constraint_home_card" />
 
                 <TextView
-                    android:layout_width="234dp"
+                    android:layout_width="200dp"
                     android:layout_height="40dp"
                     android:layout_marginEnd="12dp"
                     android:text="Do housework, go for a walk,
@@ -193,7 +193,7 @@
                     app:layout_constraintTop_toTopOf="@+id/constraint_home_card_2" />
 
                 <TextView
-                    android:layout_width="234dp"
+                    android:layout_width="200dp"
                     android:layout_height="40dp"
                     android:layout_marginEnd="12dp"
                     android:text="Reading books,  take a bath"
@@ -240,15 +240,14 @@
                     app:layout_constraintTop_toTopOf="@+id/constraint_home_card_3" />
 
                 <TextView
-                    android:layout_width="234dp"
+                    android:layout_width="200dp"
                     android:layout_height="40dp"
-                    android:layout_marginEnd="32dp"
+                    android:layout_marginRight="42dp"
                     android:text="Working, jogging in the park, cooking at home"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/button_home_start_time_3"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintLeft_toLeftOf="@+id/constraint_home_card_3"
-                    app:layout_constraintRight_toLeftOf="@+id/button_home_start_time_3"
                     app:layout_constraintStart_toStartOf="@+id/text_home_card_title_3"
                     app:layout_constraintTop_toBottomOf="@+id/text_home_card_title_3" />
 
