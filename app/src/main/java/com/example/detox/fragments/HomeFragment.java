@@ -136,15 +136,19 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    private void requestOverlayPermission() {
+        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:" + mActivity.getPackageName()));
+        intent.putExtra("test", DurationLock.TEN_MINS);
+        mActivityResultLauncher.launch(intent);
+    }
+
     // method to ask user to grant the Overlay permission
     private void checkOverlayPermission() {
         if (isGrandDrawOverlays()) {
             this.startService();
         } else {
-            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    Uri.parse("package:" + mActivity.getPackageName()));
-            intent.putExtra("test", DurationLock.TEN_MINS);
-            mActivityResultLauncher.launch(intent);
+            requestOverlayPermission();
         }
     }
 
