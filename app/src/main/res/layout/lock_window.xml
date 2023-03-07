@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/image_lock_icon_face_in_clouds"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/ic_relax" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linear_layout_lock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_border_radius"
+                android:padding="16dp"
+                android:text="15"
+                android:id="@+id/text_lock_min"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="8dp"
+                android:text=":"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_border_radius"
+                android:id="@+id/text_lock_second"
+                android:padding="16dp"
+                android:text="45"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <TextView
+            android:id="@+id/text_lock_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="22dp"
+            android:text="Nowhere to go back, focus on your work"
+            android:textColor="@color/black"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/button_lock_stop_detox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:layout_below="@+id/linear_layout_lock"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/primary_button_background"
+            android:text="Stop your freedom (9)"
+            android:paddingHorizontal="25dp"
+            android:paddingVertical="12dp"
+            android:textColor="@color/white"
+            android:layout_marginBottom="80dp"
+            />
+
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/button_lock_start_detox"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:background="@drawable/primary_button_background"-->
+<!--            android:elevation="0dp"-->
+<!--            android:paddingHorizontal="25dp"-->
+<!--            android:paddingVertical="12dp"-->
+<!--            android:text="Stop your freedom (9)"-->
+<!--            app:backgroundTint="@color/black" />-->
+
+
+    </LinearLayout>
+
+</RelativeLayout>

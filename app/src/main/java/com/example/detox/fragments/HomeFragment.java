@@ -4,6 +4,9 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,12 +14,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import com.example.detox.R;
+import com.example.detox.services.LockService;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +29,10 @@ import com.example.detox.R;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
+    private static int ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE = 2323;
+    private Context mContext;
+    private Activity mActivity;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -62,6 +71,9 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        mContext = this.getContext();
+        mActivity = this.getActivity();
     }
 
     @Override
@@ -75,14 +87,40 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        view.findViewById(R.id.button_home_fragment).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
+        view.findViewById(R.id.button_home_start_time).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 //                Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_whiteListFragment);
-//            }
-//        });
+                HomeFragment.this.checkOverlayPermission();
+            }
+        });
+
+    }
 
 
+    // method for starting the service
+    public void startService() {
+        // check if the user has already granted
+        // the Draw over other apps permission
+        if (Settings.canDrawOverlays(mContext)) {
+            // start the service based on the android version
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                mContext.startForegroundService(new Intent(mContext, LockService.class));
+            } else {
+                mActivity.startService(new Intent(mContext, LockService.class));
+            }
+        }
+    }
+
+    // method to ask user to grant the Overlay permission
+    private void checkOverlayPermission() {
+        if (!Settings.canDrawOverlays(mContext)) {
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + mActivity.getPackageName()));
+            startActivityForResult(intent, ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE);
+        } else {
+            this.startService();
+        }
     }
 
 }
