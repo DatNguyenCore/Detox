@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import com.example.detox.R;
+import com.example.detox.configs.DurationLock;
 import com.example.detox.services.LockService;
 
 /**
@@ -117,6 +118,7 @@ public class HomeFragment extends Fragment {
         if (!Settings.canDrawOverlays(mContext)) {
             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                     Uri.parse("package:" + mActivity.getPackageName()));
+            intent.putExtra("test", DurationLock.TEN_MINS);
             startActivityForResult(intent, ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE);
         } else {
             this.startService();

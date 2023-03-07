@@ -37,9 +37,7 @@ public class LockWindow {
     public LockWindow(Context context) {
         this.context = context;
 
-        this.initView();
-        countDownStart();
-
+        initView();
     }
 
     private void countDownStart() {
@@ -112,6 +110,7 @@ public class LockWindow {
                 close();
             }
         });
+
         // Define the position of the
         // window within the screen
         mParams.gravity = Gravity.FILL;
@@ -124,6 +123,8 @@ public class LockWindow {
             // inflated or present in the window
             if (layoutView.getWindowToken() == null) {
                 if (layoutView.getParent() == null) {
+                    countDownStart();
+
                     mWindowManager.addView(layoutView, mParams);
                 }
             }
