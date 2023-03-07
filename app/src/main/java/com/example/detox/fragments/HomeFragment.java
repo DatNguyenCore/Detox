@@ -9,16 +9,22 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.example.detox.R;
 import com.example.detox.configs.DurationLock;
@@ -33,6 +39,8 @@ public class HomeFragment extends Fragment {
     private static int ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE = 2323;
     private Context mContext;
     private Activity mActivity;
+    private static final String TAG = "HomeFragment";
+    private ActivityResultLauncher mActivityResultLauncher;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -88,6 +96,14 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        HomeFragment.this.startService();
+                    }
+                }
+        );
+
         view.findViewById(R.id.button_home_start_time).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,30 +114,37 @@ public class HomeFragment extends Fragment {
 
     }
 
+    private boolean isGrandDrawOverlays() {
+        return Settings.canDrawOverlays(mContext);
+    }
 
     // method for starting the service
     public void startService() {
         // check if the user has already granted
         // the Draw over other apps permission
-        if (Settings.canDrawOverlays(mContext)) {
+        if (isGrandDrawOverlays()) {
             // start the service based on the android version
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 mContext.startForegroundService(new Intent(mContext, LockService.class));
             } else {
                 mActivity.startService(new Intent(mContext, LockService.class));
             }
+        } else {
+            Toast.makeText(mContext,
+                    "Detox has not granted permission.",
+                    Toast.LENGTH_LONG).show();
         }
     }
 
     // method to ask user to grant the Overlay permission
     private void checkOverlayPermission() {
-        if (!Settings.canDrawOverlays(mContext)) {
+        if (isGrandDrawOverlays()) {
+            this.startService();
+        } else {
             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                     Uri.parse("package:" + mActivity.getPackageName()));
             intent.putExtra("test", DurationLock.TEN_MINS);
-            startActivityForResult(intent, ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE);
-        } else {
-            this.startService();
+            mActivityResultLauncher.launch(intent);
         }
     }
 
