@@ -20,7 +20,7 @@ import com.example.detox.R;
 import com.example.detox.services.LockService;
 
 public class LockWindow {
-
+    private static final String TAG = "LockWindow";
     private static final long COUNT_DOWN_10_MINUS = 600000;
     private static final long COUNT_DOWN_10_SECONDS = 10000;
 
@@ -66,7 +66,7 @@ public class LockWindow {
 
                 mBtnStop.setText(String.valueOf("Stop your freedom " + "(" + totalSeconds) + ")");
                 if (totalSeconds < 1) {
-                    mBtnStop.setVisibility(View.GONE);
+                    mBtnStop.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -98,12 +98,14 @@ public class LockWindow {
         // inflating the view with the custom layout we created
         layoutView = layoutInflater.inflate(R.layout.lock_window, null);
 
-        mBtnStop = layoutView.findViewById(R.id.button_lock_stop_detox);
+        // Define the position of the
+        // window within the screen
+        mParams.gravity = Gravity.FILL;
+        mWindowManager = (WindowManager) context.getSystemService(WINDOW_SERVICE);
 
-        mMinute = layoutView.findViewById(R.id.text_lock_min);
-        mSecond = layoutView.findViewById(R.id.text_lock_second);
         // set onClickListener on the remove button, which removes
         // the view from the window
+        mBtnStop = layoutView.findViewById(R.id.button_lock_stop_detox);
         mBtnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,25 +113,21 @@ public class LockWindow {
             }
         });
 
-        // Define the position of the
-        // window within the screen
-        mParams.gravity = Gravity.FILL;
-        mWindowManager = (WindowManager) context.getSystemService(WINDOW_SERVICE);
+        mMinute = layoutView.findViewById(R.id.text_lock_min);
+        mSecond = layoutView.findViewById(R.id.text_lock_second);
     }
 
     public void open() {
         try {
             // check if the view is already
             // inflated or present in the window
-            if (layoutView.getWindowToken() == null) {
-                if (layoutView.getParent() == null) {
-                    countDownStart();
+            if (layoutView.getWindowToken() == null && layoutView.getParent() == null) {
+                countDownStart();
 
-                    mWindowManager.addView(layoutView, mParams);
-                }
+                mWindowManager.addView(layoutView, mParams);
             }
         } catch (Exception e) {
-            Log.d("Error1", e.toString());
+            Log.d(TAG, "open: " + e.toString());
         }
     }
 
@@ -139,6 +137,7 @@ public class LockWindow {
                 mCountDownTimer.cancel();
             }
 
+            // remove front ground service
             Intent intent = new Intent(context, LockService.class);
             context.stopService(intent);
 
@@ -151,11 +150,8 @@ public class LockWindow {
                 ((ViewGroup) layoutView.getParent()).removeAllViews();
             }
 
-            // the above steps are necessary when you are adding and removing
-            // the view simultaneously, it might give some exceptions
-
         } catch (Exception e) {
-            Log.d("close error", e.toString());
+            Log.d(TAG, "close: " + e.toString());
         }
     }
 }
