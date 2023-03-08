@@ -39,11 +39,6 @@ public class LockService extends Service {
             startForegroundNotification();
         else
             startForeground(NOTIFICATION_ID, new Notification());
-
-        // create an instance of Window class
-        // and display the content on screen
-//        Window window = new Window(this);
-//        window.open();
     }
 
     @Override
@@ -56,8 +51,8 @@ public class LockService extends Service {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private void startForegroundNotification() {
-        String NOTIFICATION_CHANNEL_ID = "example.permanence";
-        String channelName = "Background Service";
+        String NOTIFICATION_CHANNEL_ID = "detox.permanence";
+        String channelName = "Detox";
         NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_MIN);
 
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -66,23 +61,12 @@ public class LockService extends Service {
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
         Notification notification = notificationBuilder.setOngoing(true)
-                .setContentTitle("Service running")
-                .setContentText("Displaying over other apps")
-
-                // this is important, otherwise the notification will show the way
-                // you want i.e. it will show some default notification
+                .setContentTitle("Detox")
+                .setContentText("Nowhere to go back, focus on your work")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-
                 .setPriority(NotificationManager.IMPORTANCE_MIN)
                 .setCategory(Notification.CATEGORY_SERVICE)
                 .build();
         startForeground(NOTIFICATION_ID, notification);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        Log.d(TAG, "onDestroy: ");
     }
 }
