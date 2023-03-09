@@ -102,9 +102,9 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         try {
-                            Long duration = result.getData().getLongExtra(HomeFragment.HONE_INTENT_DURATION_OVERLAY, 0);
+                            Long duration = result.getData().getLongExtra(HomeFragment.HONE_INTENT_DURATION_OVERLAY, DurationLock.NONE);
 
-                            if(duration != 0) {
+                            if(duration != DurationLock.NONE) {
                                 HomeFragment.this.startService(duration);
                             }
                         } catch (Exception err) {
@@ -117,37 +117,39 @@ public class HomeFragment extends Fragment {
         view.findViewById(R.id.button_home_start).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                long hours = 0;
-                long minutes = 0;
-                String stringHours = mEditTextHours.getText().toString();
-                String stringMinutes = mEditTextMinus.getText().toString();
+                try {
+                    long hours = 0;
+                    long minutes = 0;
+                    String stringHours = mEditTextHours.getText().toString();
+                    String stringMinutes = mEditTextMinus.getText().toString();
 
-                Log.d(TAG, "onClick: " + (stringHours.matches("")));
+                    if(stringHours.matches("") && stringMinutes.matches("")) {
+                        Toast.makeText(mContext, "Need to set Select time", Toast.LENGTH_LONG).show();
+                        return;
+                    }
 
-                if(stringHours.matches("") && stringMinutes.matches("")) {
-                    Toast.makeText(mContext, "Need set duration time", Toast.LENGTH_LONG).show();
-                    return;
+                    if(stringHours.matches("") && !stringMinutes.matches("")) {
+                        long longMinutes = Long.parseLong(stringMinutes);
+                        minutes = longMinutes * 60 * 1000;
+                    }
+
+                    if(!stringHours.matches("") && stringMinutes.matches("")) {
+                        long longHours = Long.parseLong(stringHours);
+                        hours = longHours * 60 * 60 * 1000;
+                    }
+
+                    if(!stringHours.matches("") && !stringMinutes.matches("")) {
+                        long longMinutes = Long.parseLong(stringMinutes);
+                        long longHours = Long.parseLong(stringHours);
+
+                        minutes = longMinutes * 60 * 1000;
+                        hours = longHours * 60 * 60 * 1000;
+                    }
+
+                    HomeFragment.this.checkOverlayPermission(hours + minutes);
+                } catch (Exception err) {
+                    Log.d(TAG, "onClick: " + err.toString());
                 }
-
-                if(stringHours.matches("") && !stringMinutes.matches("")) {
-                    long longMinutes = Long.parseLong(stringMinutes);
-                    minutes = longMinutes * 60 * 1000;
-                }
-
-                if(!stringHours.matches("") && stringMinutes.matches("")) {
-                    long longHours = Long.parseLong(stringHours);
-                    hours = longHours * 60 * 60 * 1000;
-                }
-
-                if(!stringHours.matches("") && !stringMinutes.matches("")) {
-                    long longMinutes = Long.parseLong(stringMinutes);
-                    long longHours = Long.parseLong(stringHours);
-
-                    minutes = longMinutes * 60 * 1000;
-                    hours = longHours * 60 * 60 * 1000;
-                }
-
-                HomeFragment.this.checkOverlayPermission(hours + minutes);
             }
         });
 
