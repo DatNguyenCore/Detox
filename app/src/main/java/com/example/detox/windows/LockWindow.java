@@ -21,7 +21,6 @@ import com.example.detox.services.LockService;
 
 public class LockWindow {
     private static final String TAG = "LockWindow";
-    private static final long COUNT_DOWN_10_MINUS = 600000;
     private static final long COUNT_DOWN_10_SECONDS = 10000;
 
     // declaring required variables
@@ -40,8 +39,8 @@ public class LockWindow {
         initView();
     }
 
-    private void countDownStart() {
-        mCountDownTimer = new CountDownTimer(this.COUNT_DOWN_10_MINUS, 1000) {
+    private void countDownStart(long duration) {
+        mCountDownTimer = new CountDownTimer(duration, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long totalSeconds = millisUntilFinished / 1000;
@@ -117,12 +116,12 @@ public class LockWindow {
         mSecond = layoutView.findViewById(R.id.text_lock_second);
     }
 
-    public void open() {
+    public void open(long duration) {
         try {
             // check if the view is already
             // inflated or present in the window
             if (layoutView.getWindowToken() == null && layoutView.getParent() == null) {
-                countDownStart();
+                countDownStart(duration);
 
                 mWindowManager.addView(layoutView, mParams);
             }

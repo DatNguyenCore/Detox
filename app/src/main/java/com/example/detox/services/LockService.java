@@ -15,6 +15,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import com.example.detox.R;
+import com.example.detox.fragments.HomeFragment;
 import com.example.detox.windows.LockWindow;
 
 public class LockService extends Service {
@@ -43,8 +44,14 @@ public class LockService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        LockWindow window = new LockWindow(this);
-        window.open();
+        long duration = intent.getLongExtra(HomeFragment.HONE_INTENT_DURATION_OVERLAY, 0);
+
+        if(duration != 0) {
+            LockWindow window = new LockWindow(this);
+            window.open(duration);
+        } else {
+            this.stopSelf();
+        }
 
         return START_STICKY;
     }

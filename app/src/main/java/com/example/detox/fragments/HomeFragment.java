@@ -36,13 +36,13 @@ import com.example.detox.services.LockService;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
-    private static int ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE = 2323;
     private Context mContext;
     private Activity mActivity;
     private static final String TAG = "HomeFragment";
     private ActivityResultLauncher mActivityResultLauncher;
     private EditText mEditTextHours;
     private EditText mEditTextMinus;
+    public static final String HONE_INTENT_DURATION_OVERLAY = "HONE_INTENT_DURATION_OVERLAY";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -101,7 +101,15 @@ public class HomeFragment extends Fragment {
         mActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        HomeFragment.this.startService();
+                        try {
+                            Long duration = result.getData().getLongExtra(HomeFragment.HONE_INTENT_DURATION_OVERLAY, 0);
+
+                            if(duration != 0) {
+                                HomeFragment.this.startService(duration);
+                            }
+                        } catch (Exception err) {
+                            Log.d(TAG, "onActivityResult: " + err.toString());
+                        }
                     }
                 }
         );
@@ -110,7 +118,23 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
 //                Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_whiteListFragment);
-                HomeFragment.this.checkOverlayPermission();
+                HomeFragment.this.checkOverlayPermission(DurationLock.TEN_MINS);
+            }
+        });
+
+        view.findViewById(R.id.button_home_start_time_2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_whiteListFragment);
+                HomeFragment.this.checkOverlayPermission(DurationLock.TWENTY_MINS);
+            }
+        });
+
+        view.findViewById(R.id.button_home_start_time_3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_whiteListFragment);
+                HomeFragment.this.checkOverlayPermission(DurationLock.ONE_HOUR);
             }
         });
 
@@ -173,15 +197,17 @@ public class HomeFragment extends Fragment {
     }
 
     // method for starting the service
-    public void startService() {
+    public void startService(long duration) {
         // check if the user has already granted
         // the Draw over other apps permission
         if (isGrandDrawOverlays()) {
             // start the service based on the android version
+            Intent intent = new Intent(mContext, LockService.class);
+            intent.putExtra(HONE_INTENT_DURATION_OVERLAY, duration);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                mContext.startForegroundService(new Intent(mContext, LockService.class));
+                mContext.startForegroundService(intent);
             } else {
-                mActivity.startService(new Intent(mContext, LockService.class));
+                mActivity.startService(intent);
             }
         } else {
             Toast.makeText(mContext,
@@ -190,19 +216,19 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void requestOverlayPermission() {
+    private void requestOverlayPermission(long duration) {
         Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                 Uri.parse("package:" + mActivity.getPackageName()));
-        intent.putExtra("test", DurationLock.TEN_MINS);
+        intent.putExtra(HONE_INTENT_DURATION_OVERLAY, duration);
         mActivityResultLauncher.launch(intent);
     }
 
     // method to ask user to grant the Overlay permission
-    private void checkOverlayPermission() {
+    private void checkOverlayPermission(long duration) {
         if (isGrandDrawOverlays()) {
-            this.startService();
+            this.startService(duration);
         } else {
-            requestOverlayPermission();
+            requestOverlayPermission(duration);
         }
     }
 
