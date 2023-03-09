@@ -114,6 +114,43 @@ public class HomeFragment extends Fragment {
                 }
         );
 
+        view.findViewById(R.id.button_home_start).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                long hours = 0;
+                long minutes = 0;
+                String stringHours = mEditTextHours.getText().toString();
+                String stringMinutes = mEditTextMinus.getText().toString();
+
+                Log.d(TAG, "onClick: " + (stringHours.matches("")));
+
+                if(stringHours.matches("") && stringMinutes.matches("")) {
+                    Toast.makeText(mContext, "Need set duration time", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if(stringHours.matches("") && !stringMinutes.matches("")) {
+                    long longMinutes = Long.parseLong(stringMinutes);
+                    minutes = longMinutes * 60 * 1000;
+                }
+
+                if(!stringHours.matches("") && stringMinutes.matches("")) {
+                    long longHours = Long.parseLong(stringHours);
+                    hours = longHours * 60 * 60 * 1000;
+                }
+
+                if(!stringHours.matches("") && !stringMinutes.matches("")) {
+                    long longMinutes = Long.parseLong(stringMinutes);
+                    long longHours = Long.parseLong(stringHours);
+
+                    minutes = longMinutes * 60 * 1000;
+                    hours = longHours * 60 * 60 * 1000;
+                }
+
+                HomeFragment.this.checkOverlayPermission(hours + minutes);
+            }
+        });
+
         view.findViewById(R.id.button_home_start_time).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -173,11 +210,13 @@ public class HomeFragment extends Fragment {
                 try {
                     String textValue = mEditTextMinus.getText().toString();
 
-                    if (textValue != "") {
+                    if (!textValue.matches("")) {
                         if (Integer.parseInt(textValue) > 59) {
                             mEditTextMinus.setText("59");
                             mEditTextMinus.setSelection(mEditTextMinus.length());
                         }
+                    } else {
+                        mEditTextHours.requestFocus();
                     }
                 } catch (Exception e) {
                     mEditTextHours.requestFocus();
