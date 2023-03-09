@@ -1,7 +1,5 @@
 package com.example.detox.fragments;
 
-import static android.content.Context.INPUT_METHOD_SERVICE;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -16,14 +14,15 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import android.provider.Settings;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.detox.R;
@@ -41,6 +40,8 @@ public class HomeFragment extends Fragment {
     private Activity mActivity;
     private static final String TAG = "HomeFragment";
     private ActivityResultLauncher mActivityResultLauncher;
+    private EditText mEditTextHours;
+    private EditText mEditTextMinus;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -109,6 +110,58 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
 //                Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_whiteListFragment);
                 HomeFragment.this.checkOverlayPermission();
+            }
+        });
+
+        mEditTextHours = view.findViewById(R.id.edit_text_home_hours);
+        mEditTextMinus = view.findViewById(R.id.edit_text_home_minus);
+
+        mEditTextHours.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (mEditTextHours.getText().toString().length() == 2) {
+                    mEditTextMinus.requestFocus();
+                    mEditTextMinus.setSelection(mEditTextMinus.length());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        mEditTextMinus.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                try {
+                    String textValue = mEditTextMinus.getText().toString();
+
+                    if (textValue != "") {
+                        if (Integer.parseInt(textValue) > 59) {
+                            mEditTextMinus.setText("59");
+                            mEditTextMinus.setSelection(mEditTextMinus.length());
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.d(TAG, "onTextChanged: " + e.toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
 

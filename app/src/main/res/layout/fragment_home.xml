@@ -47,7 +47,7 @@
             tools:ignore="MissingConstraints">
 
             <EditText
-                android:id="@+id/edit_text_home_mins"
+                android:id="@+id/edit_text_home_hours"
                 android:layout_width="58dp"
                 android:layout_height="58dp"
                 android:background="@drawable/edit_text_border_radius"
@@ -55,7 +55,7 @@
                 android:hint="00"
                 android:inputType="number"
                 android:maxLength="2"
-                android:nextFocusRight="@+id/edit_text_home_second"
+                android:nextFocusRight="@+id/edit_text_home_minus"
                 android:textColor="@color/white"
                 android:textColorHint="@color/gray"
                 android:textSize="20dp"
@@ -70,7 +70,7 @@
                 android:textSize="35dp" />
 
             <EditText
-                android:id="@+id/edit_text_home_second"
+                android:id="@+id/edit_text_home_minus"
                 android:layout_width="58dp"
                 android:layout_height="58dp"
                 android:background="@drawable/edit_text_border_radius"
