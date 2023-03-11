@@ -24,7 +24,7 @@ public class LockWindow {
     private static final long COUNT_DOWN_10_SECONDS = 10000;
 
     // declaring required variables
-    private Context context;
+    private Context mContext;
     private View layoutView;
     private WindowManager.LayoutParams mParams;
     private WindowManager mWindowManager;
@@ -34,7 +34,7 @@ public class LockWindow {
     private Button mBtnStop;
 
     public LockWindow(Context context) {
-        this.context = context;
+        this.mContext = context;
 
         initView();
     }
@@ -92,15 +92,16 @@ public class LockWindow {
                     PixelFormat.TRANSLUCENT);
 
         }
+
         // getting a LayoutInflater
-        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         // inflating the view with the custom layout we created
         layoutView = layoutInflater.inflate(R.layout.lock_window, null);
 
         // Define the position of the
         // window within the screen
         mParams.gravity = Gravity.FILL;
-        mWindowManager = (WindowManager) context.getSystemService(WINDOW_SERVICE);
+        mWindowManager = (WindowManager) mContext.getSystemService(WINDOW_SERVICE);
 
         // set onClickListener on the remove button, which removes
         // the view from the window
@@ -137,11 +138,11 @@ public class LockWindow {
             }
 
             // remove front ground service
-            Intent intent = new Intent(context, LockService.class);
-            context.stopService(intent);
+            Intent intent = new Intent(mContext, LockService.class);
+            mContext.stopService(intent);
 
             // remove the view from the window
-            ((WindowManager) context.getSystemService(WINDOW_SERVICE)).removeView(layoutView);
+            ((WindowManager) mContext.getSystemService(WINDOW_SERVICE)).removeView(layoutView);
             // invalidate the view
             layoutView.invalidate();
             // remove all views

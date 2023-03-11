@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.CongratulationFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/image_congratulation_speaker"
+            android:layout_width="161dp"
+            android:layout_height="126dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="90dp"
+            android:src="@drawable/ic_spicker" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_congratulation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image_congratulation_speaker"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp">
+
+            <TextView
+                android:id="@+id/text_congratulation_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CONGRATULATION!"
+                android:textColor="@color/black"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/constraint_congratulation" />
+
+            <TextView
+                android:id="@+id/text_congratulation_desc1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:text="You have started to"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_congratulation_title" />
+
+            <TextView
+                android:id="@+id/text_congratulation_desc2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="yourself true freedom"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_congratulation_desc1" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_congratulation_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="0dp"
+                android:text="See your results"
+                app:cornerRadius="40dp"
+                android:textColor="@color/white"
+                android:layout_marginTop="25dp"
+                android:backgroundTint="@color/black"
+                android:textSize="16dp"
+                android:paddingVertical="12dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_congratulation_desc2"
+
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </RelativeLayout>
+
+
+</FrameLayout>
