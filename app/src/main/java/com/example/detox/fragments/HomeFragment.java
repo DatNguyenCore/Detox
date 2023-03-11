@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.provider.Settings;
 import android.text.Editable;
@@ -43,6 +44,7 @@ public class HomeFragment extends Fragment {
     private EditText mEditTextHours;
     private EditText mEditTextMinus;
     public static final String HONE_INTENT_DURATION_OVERLAY = "HONE_INTENT_DURATION_OVERLAY";
+    private View mRootView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -94,9 +96,7 @@ public class HomeFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    private void registerOverlayResult() {
 
         mActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
                     @Override
@@ -113,50 +113,56 @@ public class HomeFragment extends Fragment {
                     }
                 }
         );
+    }
+
+    private void handleInputActions(View view) {
 
         view.findViewById(R.id.button_home_start).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    long hours = 0;
-                    long minutes = 0;
-                    String stringHours = mEditTextHours.getText().toString();
-                    String stringMinutes = mEditTextMinus.getText().toString();
 
-                    if(stringHours.matches("") && stringMinutes.matches("")) {
-                        Toast.makeText(mContext, "Need to set Select time", Toast.LENGTH_LONG).show();
-                        return;
-                    }
+                Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_congratulationFragment2);
 
-                    if(stringHours.matches("") && !stringMinutes.matches("")) {
-                        long longMinutes = Long.parseLong(stringMinutes);
-                        minutes = longMinutes * 60 * 1000;
-                    }
-
-                    if(!stringHours.matches("") && stringMinutes.matches("")) {
-                        long longHours = Long.parseLong(stringHours);
-                        hours = longHours * 60 * 60 * 1000;
-                    }
-
-                    if(!stringHours.matches("") && !stringMinutes.matches("")) {
-                        long longMinutes = Long.parseLong(stringMinutes);
-                        long longHours = Long.parseLong(stringHours);
-
-                        minutes = longMinutes * 60 * 1000;
-                        hours = longHours * 60 * 60 * 1000;
-                    }
-
-                    HomeFragment.this.checkOverlayPermission(hours + minutes);
-                } catch (Exception err) {
-                    Log.d(TAG, "onClick: " + err.toString());
-                }
             }
+//                try {
+//                    long hours = 0;
+//                    long minutes = 0;
+//                    String stringHours = mEditTextHours.getText().toString();
+//                    String stringMinutes = mEditTextMinus.getText().toString();
+//
+//                    if(stringHours.matches("") && stringMinutes.matches("")) {
+//                        Toast.makeText(mContext, "Need to set Select time", Toast.LENGTH_LONG).show();
+//                        return;R
+//                    }
+//
+//                    if(stringHours.matches("") && !stringMinutes.matches("")) {
+//                        long longMinutes = Long.parseLong(stringMinutes);
+//                        minutes = longMinutes * 60 * 1000;
+//                    }
+//
+//                    if(!stringHours.matches("") && stringMinutes.matches("")) {
+//                        long longHours = Long.parseLong(stringHours);
+//                        hours = longHours * 60 * 60 * 1000;
+//                    }
+//
+//                    if(!stringHours.matches("") && !stringMinutes.matches("")) {
+//                        long longMinutes = Long.parseLong(stringMinutes);
+//                        long longHours = Long.parseLong(stringHours);
+//
+//                        minutes = longMinutes * 60 * 1000;
+//                        hours = longHours * 60 * 60 * 1000;
+//                    }
+//
+//                    HomeFragment.this.checkOverlayPermission(hours + minutes);
+//                } catch (Exception err) {
+//                    Log.d(TAG, "onClick: " + err.toString());
+//                }
+//            }
         });
 
         view.findViewById(R.id.button_home_start_time).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_whiteListFragment);
                 HomeFragment.this.checkOverlayPermission(DurationLock.TEN_MINS);
             }
         });
@@ -230,6 +236,17 @@ public class HomeFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mRootView = view;
+
+        registerOverlayResult();
+
+        handleInputActions(view);
 
     }
 
@@ -250,6 +267,8 @@ public class HomeFragment extends Fragment {
             } else {
                 mActivity.startService(intent);
             }
+
+                Navigation.findNavController(mRootView).navigate(R.id.action_homeFragment_to_congratulationFragment2);
         } else {
             Toast.makeText(mContext,
                     "Detox has not granted permission.",
@@ -272,5 +291,4 @@ public class HomeFragment extends Fragment {
             requestOverlayPermission(duration);
         }
     }
-
 }

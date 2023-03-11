@@ -15,12 +15,13 @@
             android:layout_width="161dp"
             android:layout_height="126dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="90dp"
+            android:layout_marginTop="70dp"
             android:layout_alignParentTop="true"
             android:src="@drawable/ic_spicker" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_congratulation"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/image_congratulation_speaker"
@@ -82,6 +83,76 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_congratulation_form"
+            android:layout_width="305dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image_congratulation_speaker"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/border_card_home"
+            android:paddingVertical="22dp"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="50dp">
+
+            <TextView
+                android:id="@+id/text_congratulation_title_form"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="What can I call you?"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+
+            <EditText
+                android:id="@+id/edit_text_congratulation_title_name"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toBottomOf="@id/text_congratulation_title_form"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:background="@drawable/border_card_home"
+                android:layout_marginTop="16dp"
+                android:paddingVertical="12dp"
+                android:layout_marginRight="26dp"
+                android:layout_marginLeft="26dp"
+                android:textSize="18dp"
+                android:hint="Your name"
+                android:paddingHorizontal="14dp"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:imeOptions="actionDone"
+                android:inputType="textCapWords"
+                />
+
+            <View
+                android:id="@+id/view_congratulation_divider"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/black"
+                app:layout_constraintTop_toBottomOf="@id/edit_text_congratulation_title_name"
+                android:layout_marginTop="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/text_congratulation_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/view_congratulation_divider"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="Yes, I'm ..."
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:layout_marginTop="14dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </RelativeLayout>
 

@@ -2,11 +2,18 @@ package com.example.detox.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.detox.R;
 
@@ -16,6 +23,7 @@ import com.example.detox.R;
  * create an instance of this fragment.
  */
 public class CongratulationFragment extends Fragment {
+    private static final String TAG = "CongratulationFragment";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,5 +70,36 @@ public class CongratulationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_congratulation, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        final String prefixName = "Yes, I'm ";
+        TextView mTextName = view.findViewById(R.id.text_congratulation_name);
+        mTextName.setText(prefixName + "...");
+
+        EditText mEditTitleName = view.findViewById(R.id.edit_text_congratulation_title_name);
+        mEditTitleName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.toString().matches("")) {
+                    mTextName.setText(prefixName + "...");
+                } else {
+                    mTextName.setText(prefixName + charSequence);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 }
