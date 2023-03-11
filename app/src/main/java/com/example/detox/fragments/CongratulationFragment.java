@@ -8,12 +8,13 @@ import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.detox.R;
 
@@ -76,9 +77,21 @@ public class CongratulationFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        View mViewForm = view.findViewById(R.id.constraint_congratulation_form);
+        View mViewCongratulation = view.findViewById(R.id.constraint_congratulation);
+
+        Button mBtnSeeResult = view.findViewById(R.id.button_congratulation_start);
+        mBtnSeeResult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewCongratulation.setVisibility(View.GONE);
+                mViewForm.setVisibility(View.VISIBLE);
+            }
+        });
+
         final String prefixName = "Yes, I'm ";
-        TextView mTextName = view.findViewById(R.id.text_congratulation_name);
-        mTextName.setText(prefixName + "...");
+        Button mButtonName = view.findViewById(R.id.button_congratulation_name);
+        mButtonName.setText(prefixName + "...");
 
         EditText mEditTitleName = view.findViewById(R.id.edit_text_congratulation_title_name);
         mEditTitleName.addTextChangedListener(new TextWatcher() {
@@ -90,9 +103,9 @@ public class CongratulationFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if(charSequence.toString().matches("")) {
-                    mTextName.setText(prefixName + "...");
+                    mButtonName.setText(prefixName + "...");
                 } else {
-                    mTextName.setText(prefixName + charSequence);
+                    mButtonName.setText(prefixName + charSequence);
                 }
             }
 
@@ -101,5 +114,6 @@ public class CongratulationFragment extends Fragment {
 
             }
         });
+
     }
 }
