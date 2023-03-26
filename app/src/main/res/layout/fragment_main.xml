@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.MainFragment">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp">
+        <RelativeLayout
+            android:id="@+id/relative_main_header"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_width="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hello Jean."
+                android:textSize="36dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_setting"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/text_main_white_list_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relative_main_header"
+            android:layout_marginTop="32dp"
+            android:text="White list"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/linear_main_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/button_home_start"
+            android:layout_below="@+id/text_main_white_list_title"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="420dp"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <Button
+                android:id="@+id/btn_main_app_1"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_weight="1"
+                android:text="+"
+                android:textColor="@color/black"
+                android:background="@drawable/border_dash"
+                app:backgroundTint="@color/backgroundColor"
+                android:textSize="30dp" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_weight="1"
+                android:text="+"
+                android:textColor="@color/black"
+                android:background="@drawable/border_dash"
+                app:backgroundTint="@color/backgroundColor"
+                android:textSize="30dp" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_weight="1"
+                android:text="+"
+                android:textColor="@color/black"
+                android:background="@drawable/border_dash"
+                app:backgroundTint="@color/backgroundColor"
+                android:textSize="30dp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_home_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/primary_button_background"
+            android:elevation="0dp"
+            android:text="Start your freedom"
+            android:layout_centerHorizontal="true"
+            app:backgroundTint="@color/black" />
+
+    </RelativeLayout>
+</FrameLayout>

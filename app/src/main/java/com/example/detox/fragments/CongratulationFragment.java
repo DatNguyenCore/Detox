@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -92,6 +93,12 @@ public class CongratulationFragment extends Fragment {
         final String prefixName = "Yes, I'm ";
         Button mButtonName = view.findViewById(R.id.button_congratulation_name);
         mButtonName.setText(prefixName + "...");
+        mButtonName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_congratulationFragment2_to_mainFragment);
+            }
+        });
 
         EditText mEditTitleName = view.findViewById(R.id.edit_text_congratulation_title_name);
         mEditTitleName.addTextChangedListener(new TextWatcher() {

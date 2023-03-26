@@ -11,9 +11,6 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_homeFragment_to_whiteListFragment"
-            app:destination="@id/whiteListFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_congratulationFragment2"
             app:destination="@id/congratulationFragment2" />
     </fragment>
@@ -21,10 +18,27 @@
         android:id="@+id/whiteListFragment"
         android:name="com.example.detox.fragments.WhiteListFragment"
         android:label="fragment_white_list"
-        tools:layout="@layout/fragment_white_list" />
+        tools:layout="@layout/fragment_white_list" >
+        <action
+            android:id="@+id/action_whiteListFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
     <fragment
         android:id="@+id/congratulationFragment2"
         android:name="com.example.detox.fragments.CongratulationFragment"
         android:label="fragment_congratulation"
-        tools:layout="@layout/fragment_congratulation" />
+        tools:layout="@layout/fragment_congratulation" >
+        <action
+            android:id="@+id/action_congratulationFragment2_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.detox.fragments.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_whiteListFragment"
+            app:destination="@id/whiteListFragment" />
+    </fragment>
 </navigation>
