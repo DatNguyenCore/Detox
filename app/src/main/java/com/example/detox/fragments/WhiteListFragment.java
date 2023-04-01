@@ -124,7 +124,6 @@ public class WhiteListFragment extends Fragment {
                 return false;
             }
         });
-
     }
 
     @Override
@@ -140,7 +139,7 @@ public class WhiteListFragment extends Fragment {
         editTextSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mActivity, "Hello", Toast.LENGTH_SHORT).show();
+                Navigation.findNavController(view).navigate(R.id.action_whiteListFragment_to_searchWhiteListFragment);
             }
         });
 

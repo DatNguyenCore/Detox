@@ -18,7 +18,11 @@
         android:id="@+id/whiteListFragment"
         android:name="com.example.detox.fragments.WhiteListFragment"
         android:label="fragment_white_list"
-        tools:layout="@layout/fragment_white_list" />
+        tools:layout="@layout/fragment_white_list" >
+        <action
+            android:id="@+id/action_whiteListFragment_to_searchWhiteListFragment"
+            app:destination="@id/searchWhiteListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/congratulationFragment2"
         android:name="com.example.detox.fragments.CongratulationFragment"
@@ -37,4 +41,9 @@
             android:id="@+id/action_mainFragment_to_whiteListFragment"
             app:destination="@id/whiteListFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/searchWhiteListFragment"
+        android:name="com.example.detox.fragments.SearchWhiteListFragment"
+        android:label="fragment_search_white_list"
+        tools:layout="@layout/fragment_search_white_list" />
 </navigation>
