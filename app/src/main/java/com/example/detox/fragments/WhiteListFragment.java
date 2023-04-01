@@ -3,6 +3,7 @@ package com.example.detox.fragments;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,13 +17,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.navigation.Navigation;
 
 import com.example.detox.R;
-import com.example.detox.WhiteListItemFragment;
 import com.example.detox.adapter.WhiteListAdapter;
 import com.example.detox.models.WhiteListModal;
 
@@ -36,15 +34,13 @@ import java.util.List;
  */
 public class WhiteListFragment extends Fragment {
     private static final String TAG = "WhiteListFragment";
-    private  PackageManager mPackageManager;
-    private List<PackageInfo> mPackages;
-//    private ArrayList<WhiteListModal> mWhiteList;
-//    private ListView mListView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private ArrayList<WhiteListModal> listInstalledApp = new ArrayList();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -80,8 +76,26 @@ public class WhiteListFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        mPackageManager = getActivity().getPackageManager();
-        mPackages = mPackageManager.getInstalledPackages(PackageManager.GET_META_DATA);
+        this.getAllApplications();
+    }
+
+    private void getAllApplications() {
+        PackageManager packageManager = getActivity().getPackageManager();
+        List<PackageInfo> installedPackages = packageManager.getInstalledPackages(0);
+
+        long indexApp = 1;
+        for(PackageInfo packageInfo: installedPackages) {
+            if ((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+
+                String appName = ((String) packageInfo.applicationInfo.loadLabel(packageManager)).trim();
+                Drawable icon = packageManager.getApplicationIcon(packageInfo.applicationInfo);
+                listInstalledApp.add(new WhiteListModal(indexApp, appName, icon));
+
+                indexApp++;
+            }
+
+        }
+
     }
 
     @Override
@@ -95,17 +109,7 @@ public class WhiteListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        for (PackageInfo app : mPackages) {
-            Log.d(TAG, "onViewCreated: " + app.applicationInfo.loadLabel(mPackageManager).toString());
-            Log.d(TAG, "onViewCreated: " + app.applicationInfo.loadIcon(mPackageManager));
-        }
-
-        ArrayList<WhiteListModal> arrayList = new ArrayList();
-        arrayList.add(new WhiteListModal(1,"Binance"));
-        arrayList.add(new WhiteListModal(2,"Facebook"));
-        arrayList.add(new WhiteListModal(3,"Instagram"));
-
-        WhiteListAdapter whiteListAdapter = new WhiteListAdapter(getContext(), arrayList);
+        WhiteListAdapter whiteListAdapter = new WhiteListAdapter(getContext(), listInstalledApp);
 
         ListView mListView = view.findViewById(R.id.list_view_white_list);
         mListView.setAdapter(whiteListAdapter);

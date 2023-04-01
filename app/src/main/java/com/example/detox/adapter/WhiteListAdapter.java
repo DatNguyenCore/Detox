@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.detox.R;
@@ -45,6 +46,9 @@ public class WhiteListAdapter extends BaseAdapter {
 
             TextView textView = view.findViewById(R.id.text_name_white_list_item);
             textView.setText(mWhiteList.get(i).getName());
+
+            ImageView image = view.findViewById(R.id.image_white_list_item);
+            image.setImageDrawable(mWhiteList.get(i).getIcon());
         }
 
         return view;
