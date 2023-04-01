@@ -18,11 +18,7 @@
         android:id="@+id/whiteListFragment"
         android:name="com.example.detox.fragments.WhiteListFragment"
         android:label="fragment_white_list"
-        tools:layout="@layout/fragment_white_list" >
-        <action
-            android:id="@+id/action_whiteListFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_white_list" />
     <fragment
         android:id="@+id/congratulationFragment2"
         android:name="com.example.detox.fragments.CongratulationFragment"

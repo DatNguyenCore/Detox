@@ -22,7 +22,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.NavController;
@@ -132,6 +135,14 @@ public class WhiteListFragment extends Fragment {
 
         ListView mListView = view.findViewById(R.id.list_view_white_list);
         mListView.setAdapter(whiteListAdapter);
+
+        EditText editTextSearch = view.findViewById(R.id.edit_text_search_white_list);
+        editTextSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mActivity, "Hello", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         mNavController = Navigation.findNavController(view);
     }
