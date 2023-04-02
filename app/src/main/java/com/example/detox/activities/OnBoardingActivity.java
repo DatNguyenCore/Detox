@@ -1,16 +1,27 @@
 package com.example.detox.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+import android.view.View;
 
-import com.example.detox.R;
+import com.example.detox.MainActivity;
+import com.example.detox.databinding.ActivityOnBoardingBinding;
 
-public class OnBoardingActivity extends AppCompatActivity {
+public class OnBoardingActivity extends BaseCompatActivity {
+
+    private ActivityOnBoardingBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_on_boarding);
+        binding = ActivityOnBoardingBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        binding.btnStartOnBoarding.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(MainActivity.class);
+            }
+        });
     }
+
 }
