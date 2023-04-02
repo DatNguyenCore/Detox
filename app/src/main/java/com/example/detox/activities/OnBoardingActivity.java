@@ -5,8 +5,10 @@ import android.view.View;
 
 import com.example.detox.MainActivity;
 import com.example.detox.databinding.ActivityOnBoardingBinding;
+import com.example.detox.windows.ConfirmWindow;
+import com.example.detox.windows.OnConfirmWindowClickListener;
 
-public class OnBoardingActivity extends BaseCompatActivity {
+public class OnBoardingActivity extends BaseCompatActivity implements OnConfirmWindowClickListener {
 
     private ActivityOnBoardingBinding binding;
 
@@ -19,9 +21,19 @@ public class OnBoardingActivity extends BaseCompatActivity {
         binding.btnStartOnBoarding.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(MainActivity.class);
+                ConfirmWindow.getInstance(
+                        OnBoardingActivity.this,
+                        OnBoardingActivity.this).show();
             }
         });
     }
 
+    @Override
+    public void onConfirm(boolean allow) {
+        if(allow) {
+            startActivity(MainActivity.class);
+        } else  {
+            startActivity(MainActivity.class);
+        }
+    }
 }
