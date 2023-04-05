@@ -8,10 +8,21 @@ public class WhiteListModal {
 
     private Drawable icon;
 
-    public WhiteListModal(long _position, String _name, Drawable _icon) {
+    public String getAppPackage() {
+        return appPackage;
+    }
+
+    public void setAppPackage(String appPackage) {
+        this.appPackage = appPackage;
+    }
+
+    private String appPackage;
+
+    public WhiteListModal(long _position, String _name, Drawable _icon, String _appPackage) {
         this.position = _position;
         this.name = _name;
         this.icon = _icon;
+        this.appPackage = _appPackage;
     }
 
     public String getName() {
