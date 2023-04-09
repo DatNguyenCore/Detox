@@ -50,8 +50,6 @@ public class WhiteListAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View view) {
                     Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(mWhiteList.get(i).getAppPackage());
-                    Toast.makeText(mContext, "FSSDSDVF", Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(mWhiteList.get(i).getAppPackage());
                     mContext.startActivity(intent);
                 }
             });

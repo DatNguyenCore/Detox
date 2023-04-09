@@ -1,5 +1,6 @@
 package com.example.detox.windows;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
@@ -14,10 +15,13 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import static android.content.Context.ACTIVITY_SERVICE;
 import static android.content.Context.WINDOW_SERVICE;
 
 import com.example.detox.R;
 import com.example.detox.services.LockService;
+
+import java.util.List;
 
 public class LockWindow {
     private static final String TAG = "LockWindow";
@@ -50,6 +54,11 @@ public class LockWindow {
                 mMinute.setText(String.format("%02d", minute));
                 mSecond.setText(String.format("%02d", second));
 
+                ActivityManager am = (ActivityManager) mContext.getSystemService(ACTIVITY_SERVICE);
+                ActivityManager.RunningTaskInfo foregroundTaskInfo = am.getRunningTasks(1).get(0);
+                String foregroundTaskPackageName = foregroundTaskInfo.topActivity.getPackageName();
+
+                Log.d(TAG, "onTick: " + foregroundTaskPackageName);
             }
 
             @Override
