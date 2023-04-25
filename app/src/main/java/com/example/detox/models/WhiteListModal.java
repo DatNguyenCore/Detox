@@ -8,6 +8,8 @@ public class WhiteListModal {
 
     private Drawable icon;
 
+    private int intIcon;
+
     public String getAppPackage() {
         return appPackage;
     }
@@ -18,11 +20,12 @@ public class WhiteListModal {
 
     private String appPackage;
 
-    public WhiteListModal(long _position, String _name, Drawable _icon, String _appPackage) {
+    public WhiteListModal(long _position, String _name, Drawable _icon, String _appPackage, int _intIcon) {
         this.position = _position;
         this.name = _name;
         this.icon = _icon;
         this.appPackage = _appPackage;
+        this.intIcon = _intIcon;
     }
 
     public String getName() {
@@ -43,6 +46,10 @@ public class WhiteListModal {
 
     public Drawable getIcon() {
         return icon;
+    }
+
+    public int getIntIcon() {
+        return intIcon;
     }
 
     public void setIcon(Drawable icon) {

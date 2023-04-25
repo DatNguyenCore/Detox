@@ -85,8 +85,9 @@ public class WhiteListFragment extends Fragment {
 
                 String appName = ((String) packageInfo.applicationInfo.loadLabel(packageManager)).trim();
                 Drawable icon = packageManager.getApplicationIcon(packageInfo.applicationInfo);
+                int intIcon = packageInfo.applicationInfo.icon;
                 String appPackage = packageInfo.packageName;
-                listInstalledApp.add(new WhiteListModal(indexApp, appName, icon, appPackage));
+                listInstalledApp.add(new WhiteListModal(indexApp, appName, icon, appPackage, intIcon));
 
                 indexApp++;
             }

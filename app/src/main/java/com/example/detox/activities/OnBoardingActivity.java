@@ -1,5 +1,6 @@
 package com.example.detox.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,13 +20,15 @@ public class OnBoardingActivity extends BaseCompatActivity implements OnConfirmW
     public static final String HONE_INTENT_DURATION_OVERLAY = "HONE_INTENT_DURATION_OVERLAY";
 
     private ActivityOnBoardingBinding binding;
-    final AppSharedPreferences appSharedPreferences = new AppSharedPreferences(this);
+    private AppSharedPreferences appSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityOnBoardingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        appSharedPreferences = new AppSharedPreferences(this);
 
         binding.btnStartOnBoarding.setOnClickListener(new View.OnClickListener() {
             @Override
