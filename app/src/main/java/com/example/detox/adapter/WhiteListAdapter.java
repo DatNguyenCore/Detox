@@ -17,22 +17,29 @@ import android.widget.Toast;
 import com.example.detox.R;
 import com.example.detox.database.AppReaderContract;
 import com.example.detox.database.AppReaderDbHelper;
+import com.example.detox.fragments.WhiteListFragment;
 import com.example.detox.models.WhiteListModal;
 
 import java.util.ArrayList;
+
 
 public class WhiteListAdapter extends BaseAdapter {
     final ArrayList<WhiteListModal> mWhiteList;
     private Context mContext;
 
-    private AppReaderDbHelper dbHelper;
 
     private static final String TAG = "WhiteListAdapter";
 
-    public WhiteListAdapter(Context context, ArrayList<WhiteListModal> mWhiteList) {
+    OnWhiteListClickedListener mCallback;
+
+    public interface OnWhiteListClickedListener {
+        public void ItemClicked(WhiteListModal data);
+    }
+
+    public WhiteListAdapter(WhiteListFragment context, ArrayList<WhiteListModal> mWhiteList) {
         this.mWhiteList = mWhiteList;
-        this.mContext = context;
-        this.dbHelper = new AppReaderDbHelper(context);
+        this.mContext = context.getContext();
+        this.mCallback = (OnWhiteListClickedListener) context;
     }
 
     @Override
@@ -60,19 +67,11 @@ public class WhiteListAdapter extends BaseAdapter {
             view.findViewById(R.id.liner_white_list_item).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(mWhiteList.get(i).getAppPackage());
-//                    mContext.startActivity(intent);
 
-                    SQLiteDatabase db = dbHelper.getWritableDatabase();
-                    WhiteListModal whiteListModal = mWhiteList.get(i);
-
-                    ContentValues values = new ContentValues();
-                    values.put(AppReaderContract.AppEntry.COLUMN_NAME_NAME, whiteListModal.getName());
-                    values.put(AppReaderContract.AppEntry.COLUMN_NAME_ICON, whiteListModal.getIntIcon());
-                    values.put(AppReaderContract.AppEntry.COLUMN_NAME_PACKAGE, whiteListModal.getAppPackage());
-
-                    long newRowId = db.insert(AppReaderContract.AppEntry.TABLE_NAME, null, values);
-                    Log.d(TAG, "onClick: " + newRowId);
+                    mCallback.ItemClicked(mWhiteList.get(i));
+////                    Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(mWhiteList.get(i).getAppPackage());
+////                    mContext.startActivity(intent);
+//
                 }
             });
 
@@ -85,4 +84,5 @@ public class WhiteListAdapter extends BaseAdapter {
 
         return view;
     }
+
 }

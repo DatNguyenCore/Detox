@@ -1,10 +1,13 @@
 package com.example.detox.fragments;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -32,6 +35,9 @@ import androidx.navigation.Navigation;
 
 import com.example.detox.R;
 import com.example.detox.adapter.WhiteListAdapter;
+import com.example.detox.database.AppReaderContract;
+import com.example.detox.database.AppReaderContract.AppEntry;
+import com.example.detox.database.AppReaderDbHelper;
 import com.example.detox.models.WhiteListModal;
 
 import java.util.ArrayList;
@@ -42,7 +48,7 @@ import java.util.List;
  * Use the {@link WhiteListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WhiteListFragment extends Fragment {
+public class WhiteListFragment extends Fragment implements WhiteListAdapter.OnWhiteListClickedListener {
     private static final String TAG = "WhiteListFragment";
     private FragmentActivity mActivity;
     private NavController mNavController;
@@ -53,10 +59,12 @@ public class WhiteListFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     private ArrayList<WhiteListModal> listInstalledApp = new ArrayList();
+    private AppReaderDbHelper dbHelper;
 
 
     public WhiteListFragment() {
         // Required empty public constructor
+//        this.dbHelper = new AppReaderDbHelper(this.getContext());
     }
 
     public static WhiteListFragment newInstance(String param1, String param2) {
@@ -100,6 +108,8 @@ public class WhiteListFragment extends Fragment {
         // Inflate the layout for this fragment
         View inflatedView = inflater.inflate(R.layout.fragment_white_list, container, false);
 
+        this.dbHelper = new AppReaderDbHelper(container.getContext());
+
         this.setupToolBar(inflatedView);
 
         return inflatedView;
@@ -131,7 +141,7 @@ public class WhiteListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        WhiteListAdapter whiteListAdapter = new WhiteListAdapter(getContext(), listInstalledApp);
+        WhiteListAdapter whiteListAdapter = new WhiteListAdapter(this, listInstalledApp);
 
         ListView mListView = view.findViewById(R.id.list_view_white_list);
         mListView.setAdapter(whiteListAdapter);
@@ -145,6 +155,32 @@ public class WhiteListFragment extends Fragment {
         });
 
         mNavController = Navigation.findNavController(view);
+
+        Log.d(TAG, "onViewCreated: ");
+
+        try {
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+            Cursor cursor = db.query(AppEntry.TABLE_NAME, null,             // The array of columns to return (pass null to get all)
+                    null,              // The columns for the WHERE clause
+                    null,          // The values for the WHERE clause
+                    null,                   // don't group the rows
+                    null,                   // don't filter by row groups
+                    null);
+
+            while(cursor.moveToNext()) {
+                long itemId = cursor.getLong(
+                        cursor.getColumnIndexOrThrow(AppEntry._ID));
+                String name = String.valueOf(cursor.getColumnIndexOrThrow(AppEntry.COLUMN_NAME_NAME));
+                String icon = String.valueOf(cursor.getColumnIndexOrThrow(AppEntry.COLUMN_NAME_ICON));
+                String packageName = String.valueOf(cursor.getColumnIndexOrThrow(AppEntry.COLUMN_NAME_PACKAGE));
+
+                Log.d(TAG, "onViewCreated: " + packageName);
+
+            }
+            cursor.close();
+        } catch (Exception ex) {
+            Log.d(TAG, "onViewCreated: " + ex.toString());
+        }
     }
 
     @Override
@@ -152,5 +188,18 @@ public class WhiteListFragment extends Fragment {
         super.onAttach(context);
 
         mActivity = requireActivity();
+    }
+
+    @Override
+    public void ItemClicked(WhiteListModal data) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(AppReaderContract.AppEntry.COLUMN_NAME_NAME, data.getName());
+        values.put(AppReaderContract.AppEntry.COLUMN_NAME_ICON, data.getIntIcon());
+        values.put(AppReaderContract.AppEntry.COLUMN_NAME_PACKAGE, data.getAppPackage());
+
+        long newRowId = db.insert(AppReaderContract.AppEntry.TABLE_NAME, null, values);
+        Log.d(TAG, "ItemClicked: " + newRowId);
     }
 }
