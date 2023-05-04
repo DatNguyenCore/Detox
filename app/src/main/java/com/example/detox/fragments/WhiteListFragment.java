@@ -61,7 +61,6 @@ public class WhiteListFragment extends Fragment implements WhiteListAdapter.OnWh
     private ArrayList<WhiteListModal> listInstalledApp = new ArrayList();
     private AppReaderDbHelper dbHelper;
 
-
     public WhiteListFragment() {
         // Required empty public constructor
 //        this.dbHelper = new AppReaderDbHelper(this.getContext());
@@ -160,26 +159,44 @@ public class WhiteListFragment extends Fragment implements WhiteListAdapter.OnWh
 
         try {
             SQLiteDatabase db = dbHelper.getReadableDatabase();
-            Cursor cursor = db.query(AppEntry.TABLE_NAME, null,             // The array of columns to return (pass null to get all)
-                    null,              // The columns for the WHERE clause
-                    null,          // The values for the WHERE clause
-                    null,                   // don't group the rows
-                    null,                   // don't filter by row groups
-                    null);
+            Cursor cursor = db.query(AppEntry.TABLE_NAME, new String[] {
+                            AppEntry._ID,
+                            AppReaderContract.AppEntry.COLUMN_NAME_NAME,
+                        AppReaderContract.AppEntry.COLUMN_NAME_ICON,
+                            AppEntry.COLUMN_NAME_PACKAGE
+                    },
+                    null, null, null, null, null);
+
+//                    db.query(AppEntry.TABLE_NAME,
+//                    [
+//                    AppReaderContract.AppEntry.COLUMN_NAME_NAME,
+//            AppReaderContract.AppEntry.COLUMN_NAME_ICON,
+//                    AppEntry.COLUMN_NAME_PACKAGE
+//
+//                            ],             // The array of columns to return (pass null to get all)
+//                    null,              // The columns for the WHERE clause
+//                    null,          // The values for the WHERE clause
+//                    null,                   // don't group the rows
+//                    null,                   // don't filter by row groups
+//                    null);
 
             while(cursor.moveToNext()) {
                 long itemId = cursor.getLong(
                         cursor.getColumnIndexOrThrow(AppEntry._ID));
                 String name = String.valueOf(cursor.getColumnIndexOrThrow(AppEntry.COLUMN_NAME_NAME));
+                Log.d(TAG, "onViewCreated name: " + name);
+
                 String icon = String.valueOf(cursor.getColumnIndexOrThrow(AppEntry.COLUMN_NAME_ICON));
+                Log.d(TAG, "onViewCreated icon: " + icon);
+
                 String packageName = String.valueOf(cursor.getColumnIndexOrThrow(AppEntry.COLUMN_NAME_PACKAGE));
 
-                Log.d(TAG, "onViewCreated: " + packageName);
+                Log.d(TAG, "onViewCreated packageName: " + packageName);
 
             }
             cursor.close();
         } catch (Exception ex) {
-            Log.d(TAG, "onViewCreated: " + ex.toString());
+            Log.d(TAG, "onViewCreated error: " + ex.toString());
         }
     }
 
@@ -200,6 +217,5 @@ public class WhiteListFragment extends Fragment implements WhiteListAdapter.OnWh
         values.put(AppReaderContract.AppEntry.COLUMN_NAME_PACKAGE, data.getAppPackage());
 
         long newRowId = db.insert(AppReaderContract.AppEntry.TABLE_NAME, null, values);
-        Log.d(TAG, "ItemClicked: " + newRowId);
     }
 }
